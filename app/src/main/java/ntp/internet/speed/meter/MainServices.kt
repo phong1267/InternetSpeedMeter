@@ -12,6 +12,7 @@ import android.net.NetworkInfo
 import android.os.Binder
 import android.os.Build
 import android.os.IBinder
+import android.preference.PreferenceManager
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import ntp.internet.speed.meter.Math
@@ -21,11 +22,9 @@ import ntp.internet.speed.meter.SaveData
 class MainServices : Service() {
     lateinit var notifiCationManager: NotificationManagerCompat
     var mMath = Math()
-    //var mSaveData = SaveData(getSharedPreferences("PREF", MODE_PRIVATE))
 
     internal var thread = Thread(Runnable {
         mMath.setDefaultTotalRxBytes()
-
         while (true) {
             mMath.isMobileInternet = isConnectedMobile()
             mMath.main()
