@@ -12,42 +12,34 @@ import android.net.NetworkInfo
 import android.os.Binder
 import android.os.Build
 import android.os.IBinder
-import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import ntp.internet.speed.meter.Math
+import ntp.internet.speed.meter.SaveData
 
 
 class MainServices : Service() {
     lateinit var notifiCationManager: NotificationManagerCompat
     var mMath = Math()
-    var tongLuongDung: Long = 0
+    //var mSaveData = SaveData(getSharedPreferences("PREF", MODE_PRIVATE))
 
     internal var thread = Thread(Runnable {
-        val pref = getSharedPreferences("PREF", MODE_PRIVATE)
-        var defaultTrafficStats = mMath.getTotalRxBytes()
-        var mDownloadSpeed: Long = 0
         mMath.setDefaultTotalRxBytes()
 
-        var channelId = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            createNotificationChannel("my_service")
-        } else {
-            ""// Phien ban duoi android O thi khong can su dung
-        }
         while (true) {
             mMath.isMobileInternet = isConnectedMobile()
             mMath.main()
-            pref.edit().putString("sumWifiDownloadDay", "value").apply()
-            mDownloadSpeed = mMath.speedDownLoad
-            tongLuongDung += (mDownloadSpeed / 1000)
 
             startForeground(
                 1001,
                 createNotifiCation(
-                    channelId,
-                    mMath.icon((mDownloadSpeed / 1000).toInt()),
-                    "Tải về: ${mMath.kbToString(mDownloadSpeed)}/s, Tải lên: ${mMath.kbToString(mMath.speedUpLoad)}/s",
-                    "Wifi: ${mMath.kbToString((mMath.sumDataWifiDay))}, Di động: ${mMath.kbToString(mMath.sumDataMobileInternetDay)}"
+                    mMath.icon((mMath.speedDownLoad / 1000).toInt()),
+                    "Tải về: ${mMath.kbToString(mMath.speedDownLoad)}/s, Tải lên: ${mMath.kbToString(
+                        mMath.speedUpLoad
+                    )}/s",
+                    "Wifi: ${mMath.kbToString((mMath.sumDataWifiDay))}, Di động: ${mMath.kbToString(
+                        mMath.sumDataMobileInternetDay
+                    )}"
                 )
             )
         }
@@ -60,14 +52,21 @@ class MainServices : Service() {
         return info != null && info.isConnected && info.type == ConnectivityManager.TYPE_MOBILE
     }
 
+    private fun getChanneId():String{
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            createNotificationChannel("my_service")
+        } else {
+            ""// Phien ban duoi android O thi khong can su dung
+        }
+    }
+
     private fun createNotifiCation(
-        channelId: String,
         ico: Int,
         title: String,
         text: String
     ): Notification {
         //https://developer.android.com/training/notify-user/build-notification
-        val notification = NotificationCompat.Builder(this, channelId)
+        val notification = NotificationCompat.Builder(this, getChanneId())
             .setOngoing(true)
             .setSmallIcon(ico)
             .setOnlyAlertOnce(true)

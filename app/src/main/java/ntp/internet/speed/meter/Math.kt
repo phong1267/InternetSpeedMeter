@@ -11,7 +11,7 @@ class Math {
     var sumDataWifiDay: Long = 0
     var sumDataMobileInternetDay: Long = 0
     var sumDataWifiDayOld: Long = 0 // dùng khi TotalRxBytes bị tràn trong ngày hoặc đổi mạng
-    var sumDataMobileInternetDayOld: Long = 0 // dùng khi TotalRxBytes bị tràn trong ngày hoặc đổi mạng
+    var sumDataMobileInternetDayOld: Long = 0 // TotalRxBytes bị tràn trong ngày hoặc đổi mạng
 
     var toDayIs: Int = getToDay()
     var defaultTotalRxBytes: Long = 0
@@ -24,15 +24,17 @@ class Math {
     }
 
     fun mathSumSpeed() {
-        if(!isMobileInternet) sumDataWifiDay = (getTotalRxBytes() - defaultTotalRxBytes) + sumDataWifiDayOld
-        else sumDataMobileInternetDay = (getTotalRxBytes() - defaultTotalRxBytes) + sumDataMobileInternetDayOld
-
         if (defaultTotalRxBytes > getTotalRxBytes() || isMobileInternetOld != isMobileInternet) {
             sumDataWifiDayOld = sumDataWifiDay
             sumDataMobileInternetDayOld = sumDataMobileInternetDay
             setDefaultTotalRxBytes()
             isMobileInternetOld = isMobileInternet
         }
+
+        if (!isMobileInternet) sumDataWifiDay =
+            (getTotalRxBytes() - defaultTotalRxBytes) + sumDataWifiDayOld
+        else sumDataMobileInternetDay =
+            (getTotalRxBytes() - defaultTotalRxBytes) + sumDataMobileInternetDayOld
 
     }
 
@@ -41,7 +43,7 @@ class Math {
         if (toDayIs < getToDay()) {
             sumDataWifiDay = 0
             sumDataMobileInternetDay = 0
-            sumDataWifiDayOld= 0
+            sumDataWifiDayOld = 0
             sumDataMobileInternetDayOld = 0
             toDayIs = getToDay()
             setDefaultTotalRxBytes()
