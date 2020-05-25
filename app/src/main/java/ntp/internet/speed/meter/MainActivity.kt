@@ -8,19 +8,15 @@ import android.os.Bundle
 import android.os.IBinder
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.content_main.*
 import ntp.internet.speed.meter.internetspeedmeter.MainServices
 
 class MainActivity : AppCompatActivity() {
     internal lateinit var mService: MainServices
-    private lateinit var btnAdd: Button
-    private lateinit var listView: ListView
+    lateinit var list: MutableList<Item>
     internal var connection: ServiceConnection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName, service: IBinder) {
             val binder = service as MainServices.MyBinder
@@ -31,30 +27,27 @@ class MainActivity : AppCompatActivity() {
 
         }
     }
-    var dem = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
         var serviceIntent = Intent(this, MainServices::class.java)
-        btnAdd = findViewById<Button>(R.id.btnadd)
-        listView = findViewById<ListView>(R.id.listView)
         val mSharedPreferences = this.getSharedPreferences("DATA", Context.MODE_PRIVATE)
         var mSaveData = SaveData(mSharedPreferences)
-        dem = mSaveData.date?.size ?: 0
-        var listItems = mSaveData.date as List<String>
-        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, listItems)
-
-        listView.adapter = adapter
-
-        btnAdd.setOnClickListener(View.OnClickListener {
-            dem++
-            mSaveData.add("$dem", "$dem", "$dem")
-            var listItems = mSaveData.date as List<String>
-            val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, listItems)
-            listView.adapter = adapter
-            adapter.notifyDataSetChanged()
-        })
+        list = mutableListOf()
+        for (i in 0..mSaveData.n) {
+            list.add(
+                Item(
+                    i,
+                    mSaveData.date.get(i),
+                    mSaveData.mobile.get(i),
+                    mSaveData.wifi.get(i),
+                    "Tinh sau"
+                )
+            )
+        }
+        mainListView.adapter = ItemAdapter(list)
 
         //serviceIntent.putExtra("inputExtra", "Foreground Service Example in Android")
         ContextCompat.startForegroundService(this, serviceIntent)
