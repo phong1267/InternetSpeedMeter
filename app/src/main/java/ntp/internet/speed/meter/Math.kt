@@ -1,9 +1,10 @@
 package ntp.internet.speed.meter
 
+import android.content.Context
 import android.net.TrafficStats
 import java.util.*
 
-class Math {
+class Math(var mContext: Context) {
     var speedDownLoad: Long = 0
     var speedUpLoad: Long = 0
     var isMobileInternet: Boolean = false
@@ -41,6 +42,10 @@ class Math {
 
     fun toDoNextDay() {
         if (toDayIs < getToDay()) {
+            // Them so lieu do vao SharedPreferences
+            var mSaveData = SaveData(mContext.getSharedPreferences("DATA", Context.MODE_PRIVATE))
+            mSaveData.add(toDayIs(), "$sumDataWifiDay", "$sumDataMobileInternetDay")
+
             sumDataWifiDay = 0
             sumDataMobileInternetDay = 0
             sumDataWifiDayOld = 0
@@ -67,6 +72,13 @@ class Math {
         return ((mCalenda.get(Calendar.YEAR) * 10000)
                 + ((mCalenda.get(Calendar.MONTH) + 1) * 100)
                 + mCalenda.get(Calendar.DATE))
+    }
+
+    fun toDayIs(): String {
+        var mCalenda = Calendar.getInstance()
+        return "${mCalenda.get(Calendar.DATE)}-${mCalenda.get(Calendar.MONTH)}-${mCalenda.get(
+            Calendar.YEAR
+        )}"
     }
 
     fun getTimeToDay(): Int = ((Calendar.getInstance().get(Calendar.HOUR) * 10000)

@@ -12,35 +12,36 @@ import android.net.NetworkInfo
 import android.os.Binder
 import android.os.Build
 import android.os.IBinder
-import android.preference.PreferenceManager
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import ntp.internet.speed.meter.Math
-import ntp.internet.speed.meter.SaveData
 
 
 class MainServices : Service() {
     lateinit var notifiCationManager: NotificationManagerCompat
-    var mMath = Math()
+    var mMath = Math(this)
 
     internal var thread = Thread(Runnable {
         mMath.setDefaultTotalRxBytes()
         while (true) {
-            mMath.isMobileInternet = isConnectedMobile()
-            mMath.main()
+            try {
+                mMath.isMobileInternet = isConnectedMobile()
+                mMath.main()
 
-            startForeground(
-                1001,
-                createNotifiCation(
-                    mMath.icon((mMath.speedDownLoad / 1000).toInt()),
-                    "Tải về: ${mMath.kbToString(mMath.speedDownLoad)}/s, Tải lên: ${mMath.kbToString(
-                        mMath.speedUpLoad
-                    )}/s",
-                    "Wifi: ${mMath.kbToString((mMath.sumDataWifiDay))}, Di động: ${mMath.kbToString(
-                        mMath.sumDataMobileInternetDay
-                    )}"
+                startForeground(
+                    1001,
+                    createNotifiCation(
+                        mMath.icon((mMath.speedDownLoad / 1000).toInt()),
+                        "Tải về: ${mMath.kbToString(mMath.speedDownLoad)}/s, Tải lên: ${mMath.kbToString(
+                            mMath.speedUpLoad
+                        )}/s",
+                        "Wifi: ${mMath.kbToString((mMath.sumDataWifiDay))}, Di động: ${mMath.kbToString(
+                            mMath.sumDataMobileInternetDay
+                        )}"
+                    )
                 )
-            )
+            } catch (e: Exception) {
+            }
         }
     })
 
@@ -48,10 +49,10 @@ class MainServices : Service() {
         //https://stackoverflow.com/questions/2802472/detect-network-connection-type-on-android
         val cm = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val info: NetworkInfo = cm.getActiveNetworkInfo()
-        return info != null && info.isConnected && info.type == ConnectivityManager.TYPE_MOBILE
+        return info.isConnected && info.type == ConnectivityManager.TYPE_MOBILE
     }
 
-    private fun getChanneId():String{
+    private fun getChanneId(): String {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createNotificationChannel("my_service")
         } else {
@@ -87,7 +88,7 @@ class MainServices : Service() {
             val importance = NotificationManager.IMPORTANCE_MAX
             val mChannel = NotificationChannel(channelID, name, importance)
             mChannel.description = descriptionText
-            mChannel.enableVibration(false)
+            mChannel.enableVibration(true)
             // Đăng ký kênh với hệ thống; bạn không thể thay đổi tầm quan trọng
             // hoặc các hành vi thông báo khác sau này
             val notificationManager =
