@@ -70,6 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/colorSliver"
+            android:gravity="right"
             android:text="Ngày"
             android:textSize="@dimen/size_text" />
 
@@ -78,6 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/colorSliver"
+            android:gravity="right"
             android:text="Di Động"
             android:textSize="@dimen/size_text" />
 
@@ -86,6 +88,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/colorSliver"
+            android:gravity="right"
             android:text="Wifi"
             android:textSize="@dimen/size_text" />
 
@@ -94,6 +97,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/colorSliver"
+            android:gravity="right"
             android:text="Tổng"
             android:textSize="@dimen/size_text" />
     </LinearLayout>

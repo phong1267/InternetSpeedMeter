@@ -1,38 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:accessibilityLiveRegion="polite"
+    android:layerType="none">
 
     <TextView
-        android:id="@+id/item_date"
+        android:id="@+id/center2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="right"
-        android:textSize="@dimen/size_text" />
+        android:layout_centerHorizontal="true"
+        android:gravity="center" />
 
-    <TextView
-        android:id="@+id/item_mobile"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="right"
-        android:textSize="@dimen/size_text" />
+        android:layout_toStartOf="@+id/center2">
 
-    <TextView
-        android:id="@+id/item_wifi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="right"
-        android:textSize="@dimen/size_text" />
+        <TextView
+            android:id="@+id/center1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:gravity="center" />
 
-    <TextView
-        android:id="@+id/item_sum_data"
-        android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/item_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@+id/center1"
+            android:gravity="right"
+            android:text="123"
+            android:textSize="@dimen/size_text" />
+
+        <TextView
+            android:id="@+id/item_mobile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/center1"
+            android:gravity="right"
+            android:padding="3dip"
+            android:text="123456"
+            android:textSize="@dimen/size_text" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="right"
-        android:textSize="@dimen/size_text" />
-</LinearLayout>
+        android:layout_toEndOf="@+id/center2">
+
+        <TextView
+            android:id="@+id/center3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/item_wifi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@+id/center3"
+            android:gravity="right"
+            android:text="123"
+            android:textSize="@dimen/size_text" />
+
+        <TextView
+            android:id="@+id/item_sum_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/center3"
+            android:gravity="right"
+            android:padding="3dip"
+            android:text="123456"
+            android:textSize="@dimen/size_text" />
+    </RelativeLayout>
+</RelativeLayout>

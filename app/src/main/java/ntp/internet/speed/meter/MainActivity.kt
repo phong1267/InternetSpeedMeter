@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
                     mSaveData.date.get(i),
                     mSaveData.mobile.get(i),
                     mSaveData.wifi.get(i),
-                    "Tinh sau"
+                    mSaveData.sumData.get(i)
                 )
             )
         }

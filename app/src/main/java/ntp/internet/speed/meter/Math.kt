@@ -31,7 +31,6 @@ class Math(var mContext: Context) {
             setDefaultTotalRxBytes()
             isMobileInternetOld = isMobileInternet
         }
-
         if (!isMobileInternet) sumDataWifiDay =
             (getTotalRxBytes() - defaultTotalRxBytes) + sumDataWifiDayOld
         else sumDataMobileInternetDay =
@@ -44,7 +43,12 @@ class Math(var mContext: Context) {
         if (toDayIs < getToDay()) {
             // Them so lieu do vao SharedPreferences
             var mSaveData = SaveData(mContext.getSharedPreferences("DATA", Context.MODE_PRIVATE))
-            mSaveData.add(toDayIs(), "$sumDataWifiDay", "$sumDataMobileInternetDay")
+            mSaveData.add(
+                toDayIs(),
+                kbToString(sumDataWifiDay),
+                kbToString(sumDataMobileInternetDay),
+                kbToString(sumDataWifiDay + sumDataMobileInternetDay)
+            )
 
             sumDataWifiDay = 0
             sumDataMobileInternetDay = 0
