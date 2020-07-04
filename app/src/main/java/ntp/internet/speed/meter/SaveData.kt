@@ -5,16 +5,17 @@ import android.content.SharedPreferences
 import android.util.Log
 
 class SaveData(var sharedPreferences: SharedPreferences) {
-    val TAG = "SaveData"
-    val TAG_DATE = "date"
-    val TAG_WIFI = "wifi"
-    val TAG_MOBILE = "mobile"
-    val TAG_SUM_DATA = "sumData"
+    private val TAG = "SaveData"
+    private val TAG_DATE = "date"
+    private val TAG_WIFI = "wifi"
+    private val TAG_MOBILE = "mobile"
+    private val TAG_SUM_DATA = "sumData"
     var n = 29
     var date = getDataSharedPreferences(TAG_DATE)
     var wifi = getDataSharedPreferences(TAG_WIFI)
     var mobile = getDataSharedPreferences(TAG_MOBILE)
     var sumData = getDataSharedPreferences(TAG_SUM_DATA)
+
 
     fun add(date: String, wifi: String, mobile: String, sumData: String) {
         val tempDate = mutableListOf(date)
@@ -36,14 +37,14 @@ class SaveData(var sharedPreferences: SharedPreferences) {
     }
 
     @SuppressLint("CommitPrefEdits")
-    fun saveAll() {
+    private fun saveAll() {
         setDataToSharedPreferences(TAG_DATE, date)
         setDataToSharedPreferences(TAG_WIFI, wifi)
         setDataToSharedPreferences(TAG_MOBILE, mobile)
         setDataToSharedPreferences(TAG_SUM_DATA, sumData)
     }
 
-    fun setDataToSharedPreferences(name: String, list: MutableList<String>?) {
+    private fun setDataToSharedPreferences(name: String, list: MutableList<String>?) {
         if (list == null) return
         val edit = sharedPreferences.edit()
         try {
@@ -56,7 +57,7 @@ class SaveData(var sharedPreferences: SharedPreferences) {
         edit.apply()
     }
 
-    fun getDataSharedPreferences(name: String): MutableList<String> {
+    private fun getDataSharedPreferences(name: String): MutableList<String> {
         var list = mutableListOf<String>()
         for (i in 0..n) {
             sharedPreferences.getString("$name$i", "0")?.let { list.add(it) }

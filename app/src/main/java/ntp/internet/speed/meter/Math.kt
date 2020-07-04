@@ -9,14 +9,24 @@ class Math(var mContext: Context) {
     var speedUpLoad: Long = 0
     var isMobileInternet: Boolean = false
     var isMobileInternetOld: Boolean = false
-    var sumDataWifiDay: Long = 0
-    var sumDataMobileInternetDay: Long = 0
+    var sumDataWifiDay: Long
+        get() {
+            return mContext.getSharedPreferences("DATA", Context.MODE_PRIVATE).getLong("nowWifi", 0)
+        }
+        set(value) {
+            mContext.getSharedPreferences("DATA", Context.MODE_PRIVATE).edit().putLong("nowWifi", value).apply()
+        }
+    var sumDataMobileInternetDay: Long
+        get() {
+            return mContext.getSharedPreferences("DATA", Context.MODE_PRIVATE).getLong("nowMobile", 0)
+        }
+        set(value) {
+            mContext.getSharedPreferences("DATA", Context.MODE_PRIVATE).edit().putLong("nowMobile", value).apply()
+        }
     var sumDataWifiDayOld: Long = 0 // dùng khi TotalRxBytes bị tràn trong ngày hoặc đổi mạng
     var sumDataMobileInternetDayOld: Long = 0 // TotalRxBytes bị tràn trong ngày hoặc đổi mạng
-
     var toDayIs: Int = getToDay()
     var defaultTotalRxBytes: Long = 0
-
 
     fun main() {
         getSpeedInternet()  // lấy tốc độ downLoad, upLoad
@@ -38,7 +48,6 @@ class Math(var mContext: Context) {
 
     }
 
-
     fun toDoNextDay() {
         if (toDayIs < getToDay()) {
             // Them so lieu do vao SharedPreferences
@@ -58,7 +67,6 @@ class Math(var mContext: Context) {
             setDefaultTotalRxBytes()
         }
     }
-
 
     fun setDefaultTotalRxBytes() {
         defaultTotalRxBytes = getTotalRxBytes()
