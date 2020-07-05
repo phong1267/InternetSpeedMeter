@@ -17,17 +17,17 @@ class SaveData(var sharedPreferences: SharedPreferences) {
     var sumData = getDataSharedPreferences(TAG_SUM_DATA)
 
 
-    fun add(date: String, wifi: String, mobile: String, sumData: String) {
+    fun add(date: Long, wifi: Long, mobile: Long, sumData: Long) {
         val tempDate = mutableListOf(date)
         val tempWifi = mutableListOf(wifi)
         val tempMobile = mutableListOf(mobile)
         val tempSumData = mutableListOf(sumData)
         for (i in 0 until n) {
             if (i >= this.date?.size ?: 0) break
-            tempDate.add(this.date?.get(i).toString())
-            tempWifi.add(this.wifi?.get(i).toString())
-            tempMobile.add(this.mobile?.get(i).toString())
-            tempSumData.add(this.sumData?.get(i).toString())
+            tempDate.add(this.date?.get(i))
+            tempWifi.add(this.wifi?.get(i))
+            tempMobile.add(this.mobile?.get(i))
+            tempSumData.add(this.sumData?.get(i))
         }
         this.date = tempDate
         this.wifi = tempWifi
@@ -44,12 +44,12 @@ class SaveData(var sharedPreferences: SharedPreferences) {
         setDataToSharedPreferences(TAG_SUM_DATA, sumData)
     }
 
-    private fun setDataToSharedPreferences(name: String, list: MutableList<String>?) {
+    private fun setDataToSharedPreferences(name: String, list: MutableList<Long>?) {
         if (list == null) return
         val edit = sharedPreferences.edit()
         try {
             for (i in 0..n) {
-                edit.putString("$name$i", list.get(i))
+                edit.putLong("$name$i", list.get(i))
             }
         } catch (e: Exception) {
             Log.e(TAG, e.message)
@@ -57,10 +57,10 @@ class SaveData(var sharedPreferences: SharedPreferences) {
         edit.apply()
     }
 
-    private fun getDataSharedPreferences(name: String): MutableList<String> {
-        var list = mutableListOf<String>()
+    private fun getDataSharedPreferences(name: String): MutableList<Long> {
+        var list = mutableListOf<Long>()
         for (i in 0..n) {
-            sharedPreferences.getString("$name$i", "0")?.let { list.add(it) }
+            sharedPreferences.getLong("$name$i", 0)?.let { list.add(it) }
         }
         return list
     }

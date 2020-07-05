@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import ntp.internet.speed.meter.internetspeedmeter.MainServices
+import java.lang.Exception
 
 class MainActivity : AppCompatActivity() {
     internal lateinit var mService: MainServices
@@ -27,6 +28,21 @@ class MainActivity : AppCompatActivity() {
 
         }
     }
+    fun kbToString(kb: Long): String {
+        var temp: Float
+        if (kb >= 1024000000) {// GB
+            temp = kb.toFloat() / 1024000000.toFloat()
+            return "%.1f GB".format(temp)
+        } else if (kb >= 1024000) {
+            temp = kb.toFloat() / 1024000.toFloat()
+            return "%.1f MB".format(temp)
+        } else if (kb >= 1024) {
+            temp = kb.toFloat() / 1024.toFloat()
+            return "%.1f kB".format(temp)
+        } else {
+            return "$kb B"
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,16 +53,26 @@ class MainActivity : AppCompatActivity() {
         var mSaveData = SaveData(mSharedPreferences)
         list = mutableListOf()
         for (i in 0..mSaveData.n) {
+            var temp:String = mSaveData.date.get(i).toString()
+            try {
+                temp = temp.substring(6) + "-" +
+                        temp.substring(4,6) + "-" +
+                        temp.substring(1,4)
+            }catch (e:Exception){
+                temp ="0"
+            }
+
             list.add(
                 Item(
                     i,
-                    mSaveData.date.get(i),
-                    mSaveData.mobile.get(i),
-                    mSaveData.wifi.get(i),
-                    mSaveData.sumData.get(i)
+                    temp,
+                    kbToString(mSaveData.mobile.get(i)),
+                    kbToString(mSaveData.wifi.get(i)),
+                    kbToString(mSaveData.sumData.get(i))
                 )
             )
         }
+
         mainListView.adapter = ItemAdapter(list)
 
         //serviceIntent.putExtra("inputExtra", "Foreground Service Example in Android")

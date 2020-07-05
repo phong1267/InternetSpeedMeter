@@ -53,10 +53,10 @@ class Math(var mContext: Context) {
             // Them so lieu do vao SharedPreferences
             var mSaveData = SaveData(mContext.getSharedPreferences("DATA", Context.MODE_PRIVATE))
             mSaveData.add(
-                toDayIs(),
-                kbToString(sumDataWifiDay),
-                kbToString(sumDataMobileInternetDay),
-                kbToString(sumDataWifiDay + sumDataMobileInternetDay)
+                getToDay().toLong(),
+                sumDataWifiDay,
+                sumDataMobileInternetDay,
+                (sumDataWifiDay + sumDataMobileInternetDay)
             )
 
             sumDataWifiDay = 0

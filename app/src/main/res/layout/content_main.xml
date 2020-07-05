@@ -10,23 +10,22 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorSliver"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/colorSliver"
-            android:gravity="right"
-            android:text="   Ngày"
+            android:gravity="center"
+            android:text="Ngày"
             android:textSize="@dimen/size_text" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/colorSliver"
-            android:gravity="right"
+            android:gravity="center"
             android:text="Di Động"
             android:textSize="@dimen/size_text" />
 
@@ -34,18 +33,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/colorSliver"
-            android:gravity="right"
-            android:text="   Wifi"
+            android:gravity="center"
+            android:text="Wifi"
             android:textSize="@dimen/size_text" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/colorSliver"
-            android:gravity="right"
-            android:text="   Tổng"
+            android:gravity="center"
+            android:text="Tổng"
             android:textSize="@dimen/size_text" />
     </LinearLayout>
 
@@ -63,14 +60,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorSliver"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/colorSliver"
-            android:gravity="right"
+            android:gravity="center"
             android:text="Ngày"
             android:textSize="@dimen/size_text" />
 
@@ -78,8 +75,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/colorSliver"
-            android:gravity="right"
+            android:gravity="center"
             android:text="Di Động"
             android:textSize="@dimen/size_text" />
 
@@ -87,8 +83,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/colorSliver"
-            android:gravity="right"
+            android:gravity="center"
             android:text="Wifi"
             android:textSize="@dimen/size_text" />
 
@@ -96,8 +91,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/colorSliver"
-            android:gravity="right"
+            android:gravity="center"
             android:text="Tổng"
             android:textSize="@dimen/size_text" />
     </LinearLayout>

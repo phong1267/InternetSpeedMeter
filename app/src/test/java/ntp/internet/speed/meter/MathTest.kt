@@ -2,9 +2,9 @@ package ntp.internet.speed.meter
 
 import org.junit.Before
 import org.junit.Test
+import java.util.*
 
 internal class MathTest {
-    var mMath = Math()
     @Before
     fun setUp() {
 
@@ -12,6 +12,16 @@ internal class MathTest {
 
     @Test
     fun getMCalendar() {
+        var mCalenda = Calendar.getInstance()
+        var a = ((mCalenda.get(Calendar.YEAR) * 10000)
+                + ((mCalenda.get(Calendar.MONTH) + 1) * 100)
+                + mCalenda.get(Calendar.DATE))
+        println(a)
+
+        println("${a}".substring(6) + "-" +
+                "${a}".substring(4,6) + "-" +
+                "${a}".substring(0,4)
+        )
     }
 
     @Test
@@ -24,7 +34,6 @@ internal class MathTest {
 
     @Test
     fun getYear() {
-        println(mMath.getYear())
     }
 
     @Test
@@ -37,17 +46,14 @@ internal class MathTest {
 
     @Test
     fun getSecond() {
-        println(mMath.getSecond())
     }
 
     @Test
     fun getToDay() {
-        println(mMath.getToDay())
     }
 
     @Test
     fun getTimeToDay() {
-        println(mMath.getTimeToDay())
     }
 
     @Test
