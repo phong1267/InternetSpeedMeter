@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Ngày"
+            android:text="@string/date"
             android:textSize="@dimen/size_text" />
 
         <TextView
@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Di Động"
+            android:text="@string/mobile"
             android:textSize="@dimen/size_text" />
 
         <TextView
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Wifi"
+            android:text="@string/wifi"
             android:textSize="@dimen/size_text" />
 
         <TextView
@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Tổng"
+            android:text="@string/total"
             android:textSize="@dimen/size_text" />
     </LinearLayout>
 
@@ -68,7 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Ngày"
+            android:text="@string/date"
             android:textSize="@dimen/size_text" />
 
         <TextView
@@ -76,7 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Di Động"
+            android:text="@string/mobile"
             android:textSize="@dimen/size_text" />
 
         <TextView
@@ -84,7 +84,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Wifi"
+            android:text="@string/wifi"
             android:textSize="@dimen/size_text" />
 
         <TextView
@@ -92,7 +92,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Tổng"
+            android:text="@string/total"
             android:textSize="@dimen/size_text" />
     </LinearLayout>
 </LinearLayout>

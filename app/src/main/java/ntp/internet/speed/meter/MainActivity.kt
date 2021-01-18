@@ -18,6 +18,7 @@ import java.lang.Exception
 class MainActivity : AppCompatActivity() {
     internal lateinit var mService: MainServices
     lateinit var list: MutableList<Item>
+    lateinit var serviceIntent:Intent
     internal var connection: ServiceConnection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName, service: IBinder) {
             val binder = service as MainServices.MyBinder
@@ -48,7 +49,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-        var serviceIntent = Intent(this, MainServices::class.java)
+        serviceIntent = Intent(this, MainServices::class.java)
         val mSharedPreferences = this.getSharedPreferences("DATA", Context.MODE_PRIVATE)
         var mSaveData = SaveData(mSharedPreferences)
         list = mutableListOf()
@@ -89,9 +90,12 @@ class MainActivity : AppCompatActivity() {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
+        when (item.itemId) {
+            R.id.action_exit -> {
+                stopService(serviceIntent)
+                finish()
+            }
         }
+        return super.onOptionsItemSelected(item)
     }
 }
